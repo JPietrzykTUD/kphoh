@@ -30,10 +30,16 @@ int main( ) {
 
     std::cout << "Hello, World!" << std::endl;
 
-    tuddbs::hashmap_scalar_t< tuddbs::hsh, tuddbs::linear_probing_t > hm( 100 );
+    tuddbs::hashmap_scalar_t< tuddbs::hsh, tuddbs::linear_probing_t > hm( csv_contents.size() );
 
-    for( uint64_t i = 0; i < 50; ++i ) {
+    /*for( uint64_t i = 0; i < 50; ++i ) {
         hm.insert( 7*i, i );
+    }*/
+    for(int i =1; i<csv_contents.size(); ++i)
+    {
+        std::string inputString = csv_contents.at(i).at(0);
+        int input = std::stoi(inputString);
+        hm.insert( input, i);
     }
     for( uint64_t i = 0; i < 50; ++i ) {
         auto [ contains, value_left ] = hm.lookup( 4*i );
