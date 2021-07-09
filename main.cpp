@@ -7,18 +7,25 @@
 #include "include/hashmap/hashmap_scalar.h"
 #include "include/umash/umash.h"
 #include "include/CSVParser/CSVParser.h"
-#include "hash/loadHash.h"
+#include "include/hash/loadHash.h"
 
 namespace fs = std::filesystem;
 
 int main( ) {
 
-   // string filename(fs::current_path() + "/data/mc.csv");
-   // string file_contents;
-   // file_contents = readFileIntoString(filename);
-   // std::map<int, std::vector<string>> csv_contents;
-   // csv_contents = contentMap(file_contents, ',');
+    string filename(fs::current_path().parent_path().string() + "/data/mc.csv");
 
+   string file_contents;
+   file_contents = readFileIntoString(filename);
+   std::map<int, std::vector<string>> csv_contents;
+    //csv_contents is a map which consists of an index and a vector
+    //the vector contains the corresponding line of the csv
+    //first element of the vector is the id
+   csv_contents = contentMap(file_contents, ',');
+    /*for(auto elem : csv_contents)
+    {
+        std::cout << elem.first << " " << elem.second.at(0) << "\n";
+    }*/
 
 
     std::cout << "Hello, World!" << std::endl;

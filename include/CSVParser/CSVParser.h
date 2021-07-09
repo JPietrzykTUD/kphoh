@@ -1,8 +1,3 @@
-#include <string>
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <fstream>
 #include <map>
 
 #ifndef CSVPARSER_H_INCLUDED
