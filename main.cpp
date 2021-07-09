@@ -5,12 +5,9 @@
 #include "include/hcrstrat/linear_probing.h"
 #include "include/hash/sph.h"
 #include "include/hashmap/hashmap_scalar.h"
-//#include "include/umash/umash.h"
+#include "include/umash/umash.h"
 #include "include/CSVParser/CSVParser.h"
 #include "include/hash/loadHash.h"
-
-#define XXH_INLINE_ALL
-#include "xxhash.h"
 
 namespace fs = std::filesystem;
 
@@ -33,17 +30,10 @@ int main( ) {
 
     std::cout << "Hello, World!" << std::endl;
 
-    tuddbs::hashmap_scalar_t< tuddbs::hsh, tuddbs::linear_probing_t > hm( csv_contents.size() );
+    tuddbs::hashmap_scalar_t< tuddbs::hsh, tuddbs::linear_probing_t > hm( 100 );
 
-    /*for( uint64_t i = 0; i < 50; ++i ) {
+    for( uint64_t i = 0; i < 50; ++i ) {
         hm.insert( 7*i, i );
-    }*/
-    for(auto elem : csv_contents)
-    {
-        std::string input = elem.second.at(0);
-        const void* inputPointer = input.c_str();
-        XXH64_hash_t hash = XXH64(inputPointer, elem.second.at(0).size(), 0);
-        hm.insert(hash, elem.first);
     }
     for( uint64_t i = 0; i < 50; ++i ) {
         auto [ contains, value_left ] = hm.lookup( 4*i );
