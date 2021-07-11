@@ -26,4 +26,4 @@ add_executable(kphoh
         include/hashmap/hashmap_scalar.h
         include/hcrstrat/linear_probing.h
         include/umash/umash.h
-        main.cpp include/hash/mum.h)
+        main.cpp include/hash/mum.h include/hash/loadMum.h include/hash/spooky.h include/hash/loadSpooky.h include/hash/spooky.cpp)

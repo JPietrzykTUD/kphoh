@@ -8,6 +8,8 @@
 #include "include/umash/umash.h"
 #include "include/CSVParser/CSVParser.h"
 #include "include/hash/loadHash.h"
+#include "include/hash/loadMum.h"
+#include "include/hash/loadSpooky.h"
 
 namespace fs = std::filesystem;
 
@@ -38,7 +40,7 @@ int main( ) {
 
     std::cout << "Hello, World!" << std::endl;
 
-    tuddbs::hashmap_scalar_t< tuddbs::hsh, tuddbs::linear_probing_t > hm( first_table_map.size() );
+    tuddbs::hashmap_scalar_t< tuddbs::spooky_hash, tuddbs::linear_probing_t > hm( first_table_map.size() );
 
     /*for( uint64_t i = 0; i < 50; ++i ) {
         hm.insert( 7*i, i );
