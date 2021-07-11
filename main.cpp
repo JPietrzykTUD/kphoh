@@ -11,38 +11,50 @@
 
 namespace fs = std::filesystem;
 
+
+//Current Join: ct.id = mc.company_type_id
+std::string first_table = "ct.csv";
+int join_predicate_idx1 = 0;
+std::string second_table = "mc.csv";
+int join_predicate_idx2 = 3;
+//Current Hash: XXH64
+
 int main( ) {
 
-    string filename(fs::current_path().parent_path().string() + "/data/mc.csv");
-
-   string file_contents;
-   file_contents = readFileIntoString(filename);
-   std::map<int, std::vector<string>> csv_contents;
-    //csv_contents is a map which consists of an index and a vector
+    std::string filename1(fs::current_path().parent_path().string() + "/data/" + first_table);
+   std::string file_contents1;
+   file_contents1 = readFileIntoString(filename1);
+   std::map<int, std::vector<std::string>> first_table_map;
+    //first_table is a map which consists of an index and a vector
     //the vector contains the corresponding line of the csv
     //first element of the vector is the id
-   csv_contents = contentMap(file_contents, ',');
-    /*for(auto elem : csv_contents)
-    {
-        std::cout << elem.first << " " << elem.second.at(0) << "\n";
-    }*/
+   first_table_map = contentMap(file_contents1, ',');
 
+    std::string filename2(fs::current_path().parent_path().string() + "/data/" + second_table);
+    std::string file_contents2;
+    file_contents2 = readFileIntoString(filename2);
+    std::map<int, std::vector<std::string>> second_table_map;
+    second_table_map = contentMap(file_contents2, ',');
 
     std::cout << "Hello, World!" << std::endl;
 
-    tuddbs::hashmap_scalar_t< tuddbs::hsh, tuddbs::linear_probing_t > hm( csv_contents.size() );
+    tuddbs::hashmap_scalar_t< tuddbs::hsh, tuddbs::linear_probing_t > hm( first_table_map.size() );
 
     /*for( uint64_t i = 0; i < 50; ++i ) {
         hm.insert( 7*i, i );
     }*/
-    for(int i =1; i<csv_contents.size(); ++i)
+    for(int i =1; i < first_table_map.size(); i++)
     {
-        std::string inputString = csv_contents.at(i).at(0);
+        std::string inputString = first_table_map.at(i).at(join_predicate_idx1);
         int input = std::stoi(inputString);
         hm.insert( input, i);
     }
-    for( uint64_t i = 0; i < 50; ++i ) {
-        auto [ contains, value_left ] = hm.lookup( 4*i );
+
+
+    for( uint64_t i = 1; i < second_table_map.size(); ++i) {
+        std::string inputString = second_table_map.at(i).at(join_predicate_idx2);
+        int input = std::stoi(inputString);
+        auto [ contains, value_left ] = hm.lookup( input );
         if( contains ) {
             std::cout << "Left: " << value_left << ". Right: " << i << "\n";
         }
