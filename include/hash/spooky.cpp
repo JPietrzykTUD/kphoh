@@ -6,7 +6,7 @@
 //   Oct 31 2011: replace End, ShortMix, ShortEnd, enable ShortHash again
 
 #include <memory.h>
-#include "Spooky.h"
+#include "spooky.h"
 
 #define ALLOW_UNALIGNED_READS 1
 

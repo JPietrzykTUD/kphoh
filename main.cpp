@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <filesystem>
+#include <vector>
 
 #include "include/hcrstrat/linear_probing.h"
 #include "include/hash/sph.h"
