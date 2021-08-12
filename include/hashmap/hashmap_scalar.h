@@ -52,6 +52,7 @@ namespace tuddbs {
    template<
       template< typename > class HashFn, class CRS, typename KeyType = uint64_t, typename ValueType = std::size_t >
    class hashmap_scalar_t {
+
       private:
          KeyType normalize_key( KeyType key ) {
             // avoid conflicts when keys are 0, since 0 is used to indicate emptyness
@@ -72,7 +73,9 @@ namespace tuddbs {
             }
             _keys[ hash ]     = key;
             _values[ hash ]   = value;
-            
+            if (steps != 0){
+                ++collisions;
+            }
             stats.add_stat( key, inith, steps );
          }
          
@@ -94,6 +97,11 @@ namespace tuddbs {
          build_stats_t< KeyType > const & get_stats( ) const {
             return stats;
          }
+
+       public:
+           std::size_t const & get_collisions( ) const {
+               return collisions;
+           }
          
       private:
          std::size_t const _element_count;
@@ -102,6 +110,7 @@ namespace tuddbs {
          KeyType   * const _keys;
          ValueType * const _values;
          build_stats_t< KeyType > stats;
+         std::size_t collisions = 0;
       
       public:
          using HashFunction = HashFn< KeyType >;
@@ -119,7 +128,7 @@ namespace tuddbs {
             stats( number_of_elements )
          {
             std::fill( _keys, _keys + _element_count_hm, 0 );
-            std::cout << _element_count_hm << "\n";
+            std::cout << "element count: " << _element_count_hm << "\n";
          }
          
          ~hashmap_scalar_t( ) {

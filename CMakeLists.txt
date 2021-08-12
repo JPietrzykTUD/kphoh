@@ -14,6 +14,8 @@ add_executable(kphoh
         data/ct.csv
         data/it.csv
         data/mc.csv
+        data/mi_idx.csv
+        data/t.csv
         include/CSVParser/CSVParser.cpp
         include/CSVParser/CSVParser.h
         include/hash/loadHash.h
